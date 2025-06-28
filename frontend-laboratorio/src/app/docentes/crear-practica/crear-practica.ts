@@ -42,9 +42,13 @@ export class CrearPracticaComponent implements OnInit {
 
   cargarPracticas() {
     const url = `https://o81leawoc8.execute-api.us-east-1.amazonaws.com/practicas/docente/${this.docenteId}`;
-    this.http.get<Practica[]>(url).subscribe({
+    this.http.get<any[]>(url).subscribe({
       next: data => {
-        this.practicas = data;
+        // Mapeo para asegurar que siempre haya fechaLimite
+        this.practicas = data.map(p => ({
+          ...p,
+          fechaLimite: p.fechaLimite || p.fecha_limite || p.fecha || ''
+        }));
       },
       error: err => {
         console.error('Error al cargar prácticas:', err);
@@ -55,29 +59,24 @@ export class CrearPracticaComponent implements OnInit {
 
 onSubmit() {
   if (this.practicaForm.valid) {
-    console.log('Datos que se enviarán:', this.practicaForm.value);
     const nuevaPractica = {
       ...this.practicaForm.value,
       docenteId: this.docenteId
     };
     console.log('Objeto final que se enviará:', nuevaPractica);
-    this.http.post('https://.../practicas', nuevaPractica).subscribe( ... );
+    this.http.post('https://o81leawoc8.execute-api.us-east-1.amazonaws.com/practicas', nuevaPractica).subscribe({
+      next: () => {
+        alert('Práctica creada con éxito');
+        this.practicaForm.reset();
+        this.cargarPracticas();
+      },
+      error: err => {
+        console.error('Error al crear práctica:', err);
+        alert('Error al crear práctica');
+      }
+    });
   }
-
-
-      this.http.post('https://o81leawoc8.execute-api.us-east-1.amazonaws.com/practicas', nuevaPractica).subscribe({
-        next: () => {
-          alert('Práctica creada con éxito');
-          this.practicaForm.reset();
-          this.cargarPracticas();
-        },
-        error: err => {
-          console.error('Error al crear práctica:', err);
-          alert('Error al crear práctica');
-        }
-      });
-    }
-  }
+}
 
   // // Método para mostrar fecha en formato legible dd/mm/yyyy
   // formatoFecha(fechaISO: string): string {
@@ -86,12 +85,12 @@ onSubmit() {
   // }
 
   formatoFecha(fechaISO: string): string {
-  console.log('Fecha recibida:', fechaISO);
-  const date = new Date(fechaISO);
-  if (isNaN(date.getTime())) {
-    return 'Fecha inválida';
+    if (!fechaISO) return 'Sin fecha';
+    const date = new Date(fechaISO);
+    if (isNaN(date.getTime())) {
+      return 'Fecha inválida';
+    }
+    return date.toLocaleDateString('es-ES');
   }
-  return date.toLocaleDateString('es-ES');
-}
 
 }

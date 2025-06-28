@@ -10,7 +10,6 @@ exports.obtenerPracticasPorDocente = async (event) => {
 
   const data = await dynamoDB.scan(params).promise();
 
-  // Filtrar por el campo `docenteId`
   const practicasDocente = data.Items.filter(p => p.docenteId === docenteId);
 
   return {
