@@ -39,7 +39,7 @@ Durante el desarrollo del módulo docente se implementaron funcionalidades clave
 Realicé una separación del proyecto en dos partes: una para el backend y otra para el frontend.
 En la carpeta principal llamada srs, se encuentra la carpeta Back, que contiene toda la lógica del backend. Además, dentro del mismo directorio, creé una carpeta llamada frontend-laboratorio, donde se ubica el código correspondiente a la interfaz de usuario.
 
-![grafico1](https://i.imgur.com/lsuvhLQpng)
+![grafico1](https://i.imgur.com/lsuvhLQ.png)
 
 _Descripción: Se creó una carpeta practicas/ donde se alojan todas las funciones Lambda correspondientes a la creación, obtención, eliminación y actualización de prácticas._
 
@@ -88,11 +88,25 @@ Evidencia:
 ### Creación de Prácticas para el Docente – Registro Exitoso
 Se realizó la creación de una nueva práctica para el docente, completando todos los campos requeridos mediante una solicitud en Postman. Esta funcionalidad permite al docente registrar prácticas asociadas a sus materias, las cuales quedan correctamente vinculadas a su ID en el sistema.
 ![grafico1](https://i.imgur.com/IquvFcH.png)
-![grafico1](https://i.imgur.com/Mc5NFxC.png)
 
 ### Visualización de Prácticas Registradas
 En la parte inferior se muestran las prácticas registradas, donde se pueden observar claramente todos los datos ingresados para cada práctica asociada al docente.
+![grafico1](https://i.imgur.com/Mc5NFxC.png)
+## Conclusiones
+* Se logró integrar correctamente una aplicación frontend Angular con funciones backend desplegadas en AWS Lambda mediante Serverless Framework, permitiendo una comunicación fluida entre cliente y servidor.
 
-### Verificacion en Postman 
+* El uso de componentes standalone, ReactiveForms, y servicios permitió mantener una estructura organizada, lo que facilita el mantenimiento y escalabilidad del sistema.
 
-Se confirmó en Postman la creación exitosa de un usuario con el rol asignado de docente.
+* El módulo permite al docente gestionar prácticas y parciales de forma centralizada, asociándolos correctamente a usuarios y materias, garantizando una trazabilidad clara de la información.
+
+* La base de datos NoSQL DynamoDB se utilizó correctamente para almacenar y recuperar datos estructurados por tablas, adaptándose bien a las necesidades del sistema sin necesidad de relaciones complejas.
+
+* La diferenciación entre roles de usuario (docente y estudiante) fue implementada exitosamente, permitiendo que cada tipo de usuario acceda únicamente a las funcionalidades permitidas según su perfil.
+
+## Recomendaciones
+
+* Es recomendable implementar validaciones tanto en el frontend como en el backend para evitar el guardado de datos incompletos o inválidos.
+
+* Se sugiere mejorar el formato de fechas y permitir ordenamiento y búsqueda en tablas para una mejor experiencia de usuario.
+
+* Incluir mensajes de error detallados tanto en consola como en interfaz para facilitar la depuración y mejorar la comunicación con el usuario en caso de fallos.
